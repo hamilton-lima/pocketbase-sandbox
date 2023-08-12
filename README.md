@@ -12,3 +12,7 @@
 
 ## Experiment 4 
 - Authentication with Google
+
+## Experiment 5 
+- Synchronize data from pocketbase to another database, maybe using [Fogger](https://github.com/TheSoftwareHouse/fogger)
+- Show final data using [Superset](https://superset.apache.org)
