@@ -62,8 +62,7 @@ what is next?
 = too much eh...
 
 start with some ui components and see where this goes
-
-
+[Asking GPT for some help with the start :D](start-with-react-from-gpt.md)
 
 ### libraries found
 - gorgeus website = https://shopify.github.io/draggable/examples/
