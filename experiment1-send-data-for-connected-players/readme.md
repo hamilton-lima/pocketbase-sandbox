@@ -12,9 +12,8 @@ I want to use something different than Angular :)
 https://htmx.org/examples/ - could not find a easy way to receive the data from pocketbase and update the ui, found examples where the user action triggered a call to the server to generate the HTML to be updated
 
 
-# alpine.js
+## alpine.js
 https://alpinejs.dev/globals/alpine-data - seems to be the shared context of data to be used in for loops for example
-
 
 This example shows a x-init to load the data
 ```
@@ -39,7 +38,30 @@ The path seems to be:
 - use in the components
 - outside loop update the storage object 
 
+npm trends killing all the dreams...
+https://npmtrends.com/alpinejs-vs-angular-vs-react-vs-vue
+![npmtrends alpine vs angular vs react vs vue aug2023](npmtrends.com-alpinejs-vs-angular-vs-react-vs-vue-aug2023.png)
 
+I guess react it is...
+
+## react
+hello darkness my old friend...https://react.dev/
+
+https://github.com/vercel/next.js - app structure, seems to be the adopted "standard"
+comparing with remix, see https://npmtrends.com/next-vs-remix
+
+https://dndkit.com/ - this is cool for dragging and drop
+https://react-bootstrap.github.io/ - ha, here we go gain.
+https://github.com/developit/mitt - event handling
+
+React components seems to be straighforward.
+what is next?
+- how to navigate between "page" components?
+- how to keep state between components?
+    - session storage?? https://javascript.plainenglish.io/next-js-keep-state-7eb68984c54e
+= too much eh...
+
+start with some ui components and see where this goes
 
 
 
