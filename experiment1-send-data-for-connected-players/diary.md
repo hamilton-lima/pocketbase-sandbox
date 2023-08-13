@@ -37,6 +37,45 @@ function MyButton({ title }: { title: string }) {
 }
 ```
 
+er... `npm create-react-app --template typescript` generated an application without scripts in package.json 
+
+lets see how to convert
+see https://mattermost.com/blog/using-react-with-typescript/
+
+``` 
+npm install -D typescript @types/node @types/react @types/react-dom @types/jest
+```
+add tsconfig.json 
+
+```
+{
+  "compilerOptions": {
+    "target": "es5",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx"
+  },
+  "include": [
+    "src"
+  ]
+}
+```
+
 example https://www.youtube.com/watch?v=gUYBFDPZ5qk
 - create user and login page 
 - show status from each user
