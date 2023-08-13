@@ -10,8 +10,19 @@ experiment1-send-data-for-connected-players-pocketbase-1  | ├─ REST API: htt
 experiment1-send-data-for-connected-players-pocketbase-1  | └─ Admin UI: http://0.0.0.0:8080/_/
 
 - create events collection
+http://localhost:8080/_/?#/collections?collectionId=mno705uo3ln4a8t&filter=&sort=-created
+
+- install javascript client 
+https://github.com/pocketbase/js-sdk
+npm install pocketbase
+
+- expose `events` collection as public 
+![events-collection-api-rules.png](events-collection-api-rules.png)
 
 
+- save event when navigating 
 
 # day 2 
 
+- create user and login page 
+- show status from each user
