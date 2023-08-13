@@ -24,6 +24,19 @@ npm install pocketbase
 
 # day 2 
 
+migrate to typescript 
+https://react.dev/learn/typescript
+
+This syntax is very good!!
+
+```tsx
+function MyButton({ title }: { title: string }) {
+  return (
+    <button>{title}</button>
+  );
+}
+```
+
 example https://www.youtube.com/watch?v=gUYBFDPZ5qk
 - create user and login page 
 - show status from each user
