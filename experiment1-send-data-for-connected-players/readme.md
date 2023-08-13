@@ -64,6 +64,8 @@ what is next?
 start with some ui components and see where this goes
 [Asking GPT for some help with the start :D](start-with-react-from-gpt.md)
 
+Style to be used =) [Neo brutalism](https://github.com/marieooq/neo-brutalism-ui-library)
+
 ### libraries found
 - gorgeus website = https://shopify.github.io/draggable/examples/
 - dragging controls + snap + cools features = https://interactjs.io/
