@@ -19,10 +19,11 @@ npm install pocketbase
 - expose `events` collection as public 
 ![events-collection-api-rules.png](events-collection-api-rules.png)
 
-
 - save event when navigating 
+
 
 # day 2 
 
+example https://www.youtube.com/watch?v=gUYBFDPZ5qk
 - create user and login page 
 - show status from each user

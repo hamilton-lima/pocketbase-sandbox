@@ -1,7 +1,9 @@
 import React, { useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import { saveNavigation } from "../utils/persistence";
 
 const handleRouteChange = (location) => {
+  saveNavigation({ location: location.pathname });
   console.log("Route changed:", location.pathname);
 };
 
