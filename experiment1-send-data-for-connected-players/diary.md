@@ -83,5 +83,11 @@ https://dev.to/franciscomendes10866/how-to-use-pocketbase-authentication-with-re
 
 good job here https://github.com/FranciscoMendes10866/pocketbase-auth-example
 
+passwords length must be at minimum of 8 chars!!!!
+
+![Hurray!! page protected](page-protected.png)
+
+
+## day 3 
 
 - show status from each user
