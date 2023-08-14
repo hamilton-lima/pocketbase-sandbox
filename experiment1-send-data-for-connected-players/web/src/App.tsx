@@ -18,11 +18,13 @@ const App = () => {
         <Layout>
           <Header />
           <Navigation />
-          <Route index element={<SignUp />} />
-          <Route path="/sign-in" element={<SignIn />} />
-          <Route path="/protected" element={<RequireAuth />}>
-            <Route path="/" element={<Protected />} />
-          </Route>
+          <Routes>
+            <Route index element={<SignUp />} />
+            <Route path="/sign-in" element={<SignIn />} />
+            <Route path="/protected" element={<RequireAuth />}>
+              <Route path="/protected/" element={<Protected />} />
+            </Route>
+          </Routes>
         </Layout>
       </Router>
     </PocketProvider>
@@ -31,13 +33,7 @@ const App = () => {
 
 export default App;
 
-
-
-
-
-
-
 // <Routes>
 //   <Route path="/" element={<HomePage />} />
 //   <Route path="/about" element={<AboutPage />} />
-// </Routes> 
+// </Routes>
