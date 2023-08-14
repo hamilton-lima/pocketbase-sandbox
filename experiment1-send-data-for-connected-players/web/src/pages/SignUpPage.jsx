@@ -1,7 +1,6 @@
 import React, { useCallback, useRef } from "react";
 import { useNavigate, Link } from "react-router-dom";
-
-import { usePocket } from "../contexts/PocketContext";
+import { usePocket } from "../services/PocketProvider";
 
 export const SignUp = () => {
   const emailRef = useRef();

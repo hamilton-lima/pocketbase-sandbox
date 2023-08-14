@@ -18,11 +18,10 @@ const App = () => {
         <Layout>
           <Header />
           <Navigation />
-
           <Route index element={<SignUp />} />
           <Route path="/sign-in" element={<SignIn />} />
-          <Route element={<RequireAuth />}>
-            <Route path="/protected" element={<Protected />} />
+          <Route path="/protected" element={<RequireAuth />}>
+            <Route path="/" element={<Protected />} />
           </Route>
         </Layout>
       </Router>
@@ -31,6 +30,12 @@ const App = () => {
 };
 
 export default App;
+
+
+
+
+
+
 
 // <Routes>
 //   <Route path="/" element={<HomePage />} />
