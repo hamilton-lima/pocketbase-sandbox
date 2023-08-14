@@ -90,4 +90,11 @@ passwords length must be at minimum of 8 chars!!!!
 
 ## day 3 
 
-- show status from each user
+### goal: show status from each user
+
+go back to the admin: http://localhost:8080/_/#/collections?collectionId=_pb_users_auth_&filter=&sort=-created
+
+ok - add session entity = userID, counter
+- add join and leave session
+- show session participants subscribing to the changes
+- increase counter in your own session
