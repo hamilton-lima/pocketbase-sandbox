@@ -37,6 +37,57 @@ function MyButton({ title }: { title: string }) {
 }
 ```
 
+er... `npm create-react-app --template typescript` generated an application without scripts in package.json 
+
+lets see how to convert
+see https://mattermost.com/blog/using-react-with-typescript/
+
+``` 
+npm install -D typescript @types/node @types/react @types/react-dom @types/jest
+```
+add tsconfig.json 
+
+```
+{
+  "compilerOptions": {
+    "target": "es5",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx"
+  },
+  "include": [
+    "src"
+  ]
+}
+```
+see https://react.dev/learn/typescript for more docs 
+
 example https://www.youtube.com/watch?v=gUYBFDPZ5qk
 - create user and login page 
+https://dev.to/franciscomendes10866/how-to-use-pocketbase-authentication-with-react-context-11be
+
+good job here https://github.com/FranciscoMendes10866/pocketbase-auth-example
+
+passwords length must be at minimum of 8 chars!!!!
+
+![Hurray!! page protected](page-protected.png)
+
+
+## day 3 
+
 - show status from each user
