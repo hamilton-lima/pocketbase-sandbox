@@ -75,7 +75,13 @@ add tsconfig.json
   ]
 }
 ```
+see https://react.dev/learn/typescript for more docs 
 
 example https://www.youtube.com/watch?v=gUYBFDPZ5qk
 - create user and login page 
+https://dev.to/franciscomendes10866/how-to-use-pocketbase-authentication-with-react-context-11be
+
+good job here https://github.com/FranciscoMendes10866/pocketbase-auth-example
+
+
 - show status from each user
