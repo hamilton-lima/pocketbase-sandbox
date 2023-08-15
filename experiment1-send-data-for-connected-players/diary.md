@@ -90,4 +90,22 @@ passwords length must be at minimum of 8 chars!!!!
 
 ## day 3 
 
-- show status from each user
+### goal: show status from each user
+
+go back to the admin: http://localhost:8080/_/#/collections?collectionId=_pb_users_auth_&filter=&sort=-created
+
+#### done 
+sigin another@foo.com/12345678
+- add session entity = userID, counter
+- create session 
+- leave session
+- fix when adding after a reload is adding multiple times, missed unsubscribing 
+- show session participants subscribing to the changes
+
+#### to do 
+- increase counter in your own session
+- update is not working properly
+
+## day 4 
+- refactor PocketProvider.tsx to isolate: PocketProvider, AuthProvider and SessionProvider
+- return record with proper data type
