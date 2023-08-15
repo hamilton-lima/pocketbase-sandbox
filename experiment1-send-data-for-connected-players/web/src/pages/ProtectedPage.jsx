@@ -1,5 +1,6 @@
 import { usePocket } from "../services/PocketProvider";
 import SessionControls from "../components/SessionControls";
+import SessionList from "../components/SessionList";
 
 export const Protected = () => {
   const { logout, user } = usePocket();
@@ -15,6 +16,9 @@ export const Protected = () => {
       </section>
       <div>
         <SessionControls />
+      </div>
+      <div>
+        <SessionList />
       </div>
     </>
   );

@@ -6,7 +6,7 @@ import {
   useEffect,
   useMemo,
 } from "react";
-import PocketBase, { Record } from "pocketbase";
+import PocketBase, { Record, RecordSubscription } from "pocketbase";
 import { useInterval } from "usehooks-ts";
 import jwtDecode from "jwt-decode";
 import ms from "ms";
@@ -24,6 +24,7 @@ export interface PocketContextData {
   user: object | null;
   token: string;
   pb: PocketBase | null;
+  sessions: Record[];
 }
 
 const EMPTY_STATE: PocketContextData = {
@@ -37,16 +38,40 @@ const EMPTY_STATE: PocketContextData = {
   user: null,
   token: "",
   pb: null,
+  sessions: [],
 };
+
+const EMPTY_SESSIONS: Record[] = [];
 const PocketContext = createContext<PocketContextData>(EMPTY_STATE);
 
 export const PocketProvider = ({ children }: any) => {
-  const pb = useMemo(() => new PocketBase(BASE_URL), []);
+  const pb = useMemo(() => {
+    const result = new PocketBase(BASE_URL);
+    result.autoCancellation(false);
+    return result;
+  }, []);
 
   const [token, setToken] = useState(pb.authStore.token);
   const [user, setUser] = useState(pb.authStore.model);
+  const [sessions, setSessions] = useState(EMPTY_SESSIONS);
+
+  async function init() {
+    setSessions(await pb.collection("sessions").getFullList());
+
+    pb.collection("sessions").subscribe("*", (e: RecordSubscription) => {
+      console.log("Sessions collection updated", e);
+      if (e.action == "create") {
+        setSessions(sessions.concat(e.record));
+      }
+      if (e.action == "delete") {
+        setSessions(sessions.filter((value) => value.id != e.record.id));
+      }
+      console.log("sessions", sessions);
+    });
+  }
 
   useEffect(() => {
+    init();
     return pb.authStore.onChange((token, model) => {
       setToken(token);
       setUser(model);
@@ -104,6 +129,7 @@ export const PocketProvider = ({ children }: any) => {
         user,
         token,
         pb,
+        sessions,
       }}
     >
       {children}

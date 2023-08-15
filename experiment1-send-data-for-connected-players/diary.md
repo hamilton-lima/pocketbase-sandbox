@@ -96,10 +96,10 @@ go back to the admin: http://localhost:8080/_/#/collections?collectionId=_pb_use
 
 #### done 
 sigin another@foo.com/12345678
-ok - add session entity = userID, counter
-ok - create session 
+- add session entity = userID, counter
+- create session 
+- leave session
 
 #### to do 
-- leave session
 - show session participants subscribing to the changes
 - increase counter in your own session
