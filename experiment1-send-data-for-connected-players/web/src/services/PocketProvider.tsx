@@ -61,10 +61,12 @@ export const PocketProvider = ({ children }: any) => {
     pb.collection("sessions").subscribe("*", (e: RecordSubscription) => {
       console.log("Sessions collection updated", e);
       if (e.action == "create") {
-        setSessions(sessions.concat(e.record));
+        setSessions((current) => [...current, e.record]);
       }
       if (e.action == "delete") {
-        setSessions(sessions.filter((value) => value.id != e.record.id));
+        setSessions((current) =>
+          current.filter((value) => value.id != e.record.id)
+        );
       }
       console.log("sessions", sessions);
     });
