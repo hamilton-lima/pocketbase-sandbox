@@ -54,6 +54,11 @@ export const PocketProvider = ({ children }: any) => {
   const [token, setToken] = useState(pb.authStore.token);
   const [user, setUser] = useState(pb.authStore.model);
   const [sessions, setSessions] = useState(EMPTY_SESSIONS);
+  let unsubscribe = () => {};
+
+  const componentWillUnmount = () => {
+    unsubscribe();
+  };
 
   async function init() {
     const all = await pb.collection("sessions").getFullList({
@@ -62,19 +67,21 @@ export const PocketProvider = ({ children }: any) => {
     });
     setSessions(all);
 
-    pb.collection("sessions").subscribe("*", async (e: RecordSubscription) => {
-      console.log("Sessions collection updated", e);
-      if (e.action == "create") {
-        e.record.expand = await pb.collection("users").getOne(e.record.user);
-        setSessions((current) => [...current, e.record]);
-      }
-      if (e.action == "delete") {
-        setSessions((current) =>
-          current.filter((value) => value.id != e.record.id)
-        );
-      }
-      console.log("sessions", sessions);
-    });
+    unsubscribe = await pb
+      .collection("sessions")
+      .subscribe("*", async (e: RecordSubscription) => {
+        console.log("Sessions collection updated", e);
+        if (e.action == "create") {
+          e.record.expand = await pb.collection("users").getOne(e.record.user);
+          setSessions((current) => [...current, e.record]);
+        }
+        if (e.action == "delete") {
+          setSessions((current) =>
+            current.filter((value) => value.id != e.record.id)
+          );
+        }
+        console.log("sessions", sessions);
+      });
   }
 
   useEffect(() => {

@@ -103,3 +103,5 @@ sigin another@foo.com/12345678
 #### to do 
 - show session participants subscribing to the changes
 - increase counter in your own session
+
+- fix when adding after a reload is adding multiple times the subscription is 
