@@ -4,7 +4,7 @@ import { saveNavigation } from "../utils/persistence";
 import { usePocket } from "../services/PocketProvider";
 
 const SessionControls = () => {
-  const { joinSession, leaveSession } = usePocket();
+  const { joinSession, leaveSession, updateSession, sessions } = usePocket();
   const [sessionID, setSessionID] = useState("");
 
   async function join(e: any) {
@@ -25,11 +25,32 @@ const SessionControls = () => {
     }
   }
 
+  async function update(amount: number) {
+    if (sessionID) {
+      const record = sessions.find((session) => session.id == sessionID);
+      console.log("Found current session", record);
+      if (record) {
+        const current = record.data;
+        console.log("current data", current);
+
+        if (current) {
+          current.counter = current.counter + amount;
+          const result = await updateSession(sessionID, current);
+          console.log("session updated", result);
+        }
+      }
+    }
+  }
+
   return (
     <>
       <div>
         <button onClick={join}>Join Session</button>
         <button onClick={leave}>Leave Session</button>
+      </div>
+      <div>
+        <button onClick={() => update(1)}>PLUS</button>
+        <button onClick={() => update(-1)}>MINUS</button>
       </div>
       <div>session [{sessionID}]</div>
     </>

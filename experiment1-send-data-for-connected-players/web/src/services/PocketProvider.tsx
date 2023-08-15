@@ -21,6 +21,7 @@ export interface PocketContextData {
   logout: Function;
   joinSession: () => Promise<Record | undefined>;
   leaveSession: (sessionID: string) => void;
+  updateSession: (sessionID: string, data: object) => void;
   user: object | null;
   token: string;
   pb: PocketBase | null;
@@ -35,6 +36,7 @@ const EMPTY_STATE: PocketContextData = {
     return undefined;
   },
   leaveSession: () => {},
+  updateSession: () => {},
   user: null,
   token: "",
   pb: null,
@@ -80,6 +82,16 @@ export const PocketProvider = ({ children }: any) => {
             current.filter((value) => value.id != e.record.id)
           );
         }
+        if (e.action == "update") {
+          setSessions((current) => {
+            const index = current.findIndex((value) => value.id == e.record.id);
+            console.log("index found", index);
+            if (index) {
+              current[index] = e.record;
+            }
+            return current;
+          });
+        }
         console.log("sessions", sessions);
       });
   }
@@ -120,6 +132,12 @@ export const PocketProvider = ({ children }: any) => {
     }
   };
 
+  const updateSession = async (sessionID: string, data: object) => {
+    if (user) {
+      return await pb.collection("sessions").update(sessionID, { data });
+    }
+  };
+
   const refreshSession = useCallback(async () => {
     if (!pb.authStore.isValid) return;
     const decoded: any = jwtDecode(token);
@@ -140,6 +158,7 @@ export const PocketProvider = ({ children }: any) => {
         logout,
         joinSession,
         leaveSession,
+        updateSession,
         user,
         token,
         pb,

@@ -99,9 +99,13 @@ sigin another@foo.com/12345678
 - add session entity = userID, counter
 - create session 
 - leave session
+- fix when adding after a reload is adding multiple times, missed unsubscribing 
+- show session participants subscribing to the changes
 
 #### to do 
-- show session participants subscribing to the changes
 - increase counter in your own session
+- update is not working properly
 
-- fix when adding after a reload is adding multiple times the subscription is 
+## day 4 
+- refactor PocketProvider.tsx to isolate: PocketProvider, AuthProvider and SessionProvider
+- return record with proper data type
