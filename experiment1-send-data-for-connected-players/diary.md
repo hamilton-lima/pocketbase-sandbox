@@ -94,7 +94,12 @@ passwords length must be at minimum of 8 chars!!!!
 
 go back to the admin: http://localhost:8080/_/#/collections?collectionId=_pb_users_auth_&filter=&sort=-created
 
+#### done 
+sigin another@foo.com/12345678
 ok - add session entity = userID, counter
-- add join and leave session
+ok - create session 
+
+#### to do 
+- leave session
 - show session participants subscribing to the changes
 - increase counter in your own session

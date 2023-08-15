@@ -6,7 +6,7 @@ import {
   useEffect,
   useMemo,
 } from "react";
-import PocketBase from "pocketbase";
+import PocketBase, { Record } from "pocketbase";
 import { useInterval } from "usehooks-ts";
 import jwtDecode from "jwt-decode";
 import ms from "ms";
@@ -19,6 +19,8 @@ export interface PocketContextData {
   register: Function;
   login: Function;
   logout: Function;
+  joinSession: () => Promise<Record | undefined>;
+  leaveSession: (sessionID: string) => void;
   user: object | null;
   token: string;
   pb: PocketBase | null;
@@ -28,6 +30,10 @@ const EMPTY_STATE: PocketContextData = {
   register: () => {},
   login: () => {},
   logout: () => {},
+  joinSession: async () => {
+    return undefined;
+  },
+  leaveSession: () => {},
   user: null,
   token: "",
   pb: null,
@@ -61,6 +67,20 @@ export const PocketProvider = ({ children }: any) => {
     pb.authStore.clear();
   }, []);
 
+  const joinSession = async (): Promise<Record | undefined> => {
+    if (user) {
+      return await pb
+        .collection("sessions")
+        .create({ user: user.id, data: { counter: 0 } });
+    }
+  };
+
+  const leaveSession = async (sessionID: string) => {
+    if (user) {
+      return await pb.collection("sessions").delete(sessionID);
+    }
+  };
+
   const refreshSession = useCallback(async () => {
     if (!pb.authStore.isValid) return;
     const decoded: any = jwtDecode(token);
@@ -75,7 +95,16 @@ export const PocketProvider = ({ children }: any) => {
 
   return (
     <PocketContext.Provider
-      value={{ register, login, logout, user, token, pb }}
+      value={{
+        register,
+        login,
+        logout,
+        joinSession,
+        leaveSession,
+        user,
+        token,
+        pb,
+      }}
     >
       {children}
     </PocketContext.Provider>
