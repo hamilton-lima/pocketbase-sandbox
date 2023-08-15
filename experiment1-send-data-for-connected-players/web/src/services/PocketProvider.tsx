@@ -56,11 +56,16 @@ export const PocketProvider = ({ children }: any) => {
   const [sessions, setSessions] = useState(EMPTY_SESSIONS);
 
   async function init() {
-    setSessions(await pb.collection("sessions").getFullList());
+    const all = await pb.collection("sessions").getFullList({
+      sort: "created",
+      expand: "user",
+    });
+    setSessions(all);
 
-    pb.collection("sessions").subscribe("*", (e: RecordSubscription) => {
+    pb.collection("sessions").subscribe("*", async (e: RecordSubscription) => {
       console.log("Sessions collection updated", e);
       if (e.action == "create") {
+        e.record.expand = await pb.collection("users").getOne(e.record.user);
         setSessions((current) => [...current, e.record]);
       }
       if (e.action == "delete") {

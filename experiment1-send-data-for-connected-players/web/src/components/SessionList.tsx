@@ -8,7 +8,11 @@ const SessionList = () => {
       <div>Sessions ({sessions.length})</div>
       <hr />
       {sessions.map((item, index) => {
-        return <div key={index}>{JSON.stringify(item)}</div>;
+        return (
+          <div key={index}>
+            {item.expand.email as any} {JSON.stringify(item.data)}
+          </div>
+        );
       })}
     </>
   );
