@@ -4,7 +4,7 @@ import { saveNavigation } from "../utils/persistence";
 import { usePocket } from "../services/PocketProvider";
 
 const SessionControls = () => {
-  const { joinSession } = usePocket();
+  const { joinSession, leaveSession } = usePocket();
   const [sessionID, setSessionID] = useState("");
 
   async function join(e: any) {
@@ -16,10 +16,20 @@ const SessionControls = () => {
     }
   }
 
+  async function leave(e: any) {
+    e.preventDefault();
+    if (sessionID) {
+      leaveSession(sessionID);
+      setSessionID("");
+      console.log("You Left the session");
+    }
+  }
+
   return (
     <>
       <div>
         <button onClick={join}>Join Session</button>
+        <button onClick={leave}>Leave Session</button>
       </div>
       <div>session [{sessionID}]</div>
     </>
