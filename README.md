@@ -6,6 +6,8 @@
 
 ## Experiment 2
 - Move elements and synchronize for all connected players
+- Add reusable visual components
+    - https://www.radix-ui.com/
 
 ## Experiment 3 
 - Deploy to a server
