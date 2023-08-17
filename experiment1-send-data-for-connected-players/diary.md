@@ -102,10 +102,17 @@ sigin another@foo.com/12345678
 - fix when adding after a reload is adding multiple times, missed unsubscribing 
 - show session participants subscribing to the changes
 
+## day 4 
+
+#### done 
+PocketProvider.init() is called twice...
+https://react.dev/learn/synchronizing-with-effects#not-an-effect-initializing-the-application
+<React.StrictMode> works like that in dev mode when refactoring prevent this.
+
+- update is not working properly
+another@foo.com/12345678
+
 #### to do 
 - increase counter in your own session
-- update is not working properly
-
-## day 4 
 - refactor PocketProvider.tsx to isolate: PocketProvider, AuthProvider and SessionProvider
 - return record with proper data type
