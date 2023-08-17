@@ -108,11 +108,19 @@ sigin another@foo.com/12345678
 PocketProvider.init() is called twice...
 https://react.dev/learn/synchronizing-with-effects#not-an-effect-initializing-the-application
 <React.StrictMode> works like that in dev mode when refactoring prevent this.
-
 - update is not working properly
 another@foo.com/12345678
+- increase counter in your own session
 
 #### to do 
-- increase counter in your own session
 - refactor PocketProvider.tsx to isolate: PocketProvider, AuthProvider and SessionProvider
+  - use reduceRight composition strategy from here https://matheusplessmann.com/avoid-provider-hell-with-composition/
+  - PocketProvider - keep connection to pocketbase and expose pb state
+  - AuthProvider - authentication only
+  - SessionProvider - user session, rename to GameStateProvider, session has similar context to authentication
+
 - return record with proper data type
+  - can we export classes from pocketbase?
+  - can we generate a swagger and then generate the models only?
+
+  
