@@ -68,6 +68,11 @@ export const PocketProvider = ({ children }: any) => {
       expand: "user",
     });
     setSessions(all);
+    console.log("init");
+
+    // TODO: Handle the subscription outside of the component, as useEffect will be fired multiple times
+    // https://react.dev/learn/synchronizing-with-effects#not-an-effect-initializing-the-application
+    unsubscribe();
 
     unsubscribe = await pb
       .collection("sessions")
@@ -89,11 +94,13 @@ export const PocketProvider = ({ children }: any) => {
             if (index) {
               current[index] = e.record;
             }
-            return current;
+            // creates a new object in the state to force a UI refresh
+            return [...current];
           });
         }
         console.log("sessions", sessions);
       });
+    return unsubscribe;
   }
 
   useEffect(() => {
@@ -120,9 +127,12 @@ export const PocketProvider = ({ children }: any) => {
 
   const joinSession = async (): Promise<Record | undefined> => {
     if (user) {
-      return await pb
+      console.log("joining session");
+      const result = await pb
         .collection("sessions")
         .create({ user: user.id, data: { counter: 0 } });
+      console.log("joinned session", result);
+      return result;
     }
   };
 

@@ -6,6 +6,9 @@
 
 ## Experiment 2
 - Move elements and synchronize for all connected players
+- Add reusable visual components
+    - https://www.radix-ui.com/
+    - https://ui.shadcn.com/examples/authentication
 
 ## Experiment 3 
 - Deploy to a server
