@@ -1,17 +1,16 @@
 import {
   createContext,
-  useContext,
   useCallback,
   useState,
   useEffect,
-  useMemo,
+  useContext,
 } from "react";
 import PocketBase, { Record, RecordSubscription } from "pocketbase";
 import { useInterval } from "usehooks-ts";
 import jwtDecode from "jwt-decode";
 import ms from "ms";
+import { usePocketbaseBear } from "./pocketbase.bear";
 
-const BASE_URL = "http://127.0.0.1:8080";
 const fiveMinutesInMs = ms("5 minutes");
 const twoMinutesInMs = ms("2 minutes");
 
@@ -24,7 +23,6 @@ export interface PocketContextData {
   updateSession: (sessionID: string, data: object) => void;
   user: object | null;
   token: string;
-  pb: PocketBase | null;
   sessions: Record[];
 }
 
@@ -39,7 +37,6 @@ const EMPTY_STATE: PocketContextData = {
   updateSession: () => {},
   user: null,
   token: "",
-  pb: null,
   sessions: [],
 };
 
@@ -47,11 +44,7 @@ const EMPTY_SESSIONS: Record[] = [];
 const PocketContext = createContext<PocketContextData>(EMPTY_STATE);
 
 export const PocketProvider = ({ children }: any) => {
-  const pb = useMemo(() => {
-    const result = new PocketBase(BASE_URL);
-    result.autoCancellation(false);
-    return result;
-  }, []);
+  const pb = usePocketbaseBear((state) => state.pb);
 
   const [token, setToken] = useState(pb.authStore.token);
   const [user, setUser] = useState(pb.authStore.model);
@@ -171,7 +164,6 @@ export const PocketProvider = ({ children }: any) => {
         updateSession,
         user,
         token,
-        pb,
         sessions,
       }}
     >
