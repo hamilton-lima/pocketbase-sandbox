@@ -1,0 +1,59 @@
+import PocketBase from "pocketbase";
+import { useInterval } from "usehooks-ts";
+import jwtDecode from "jwt-decode";
+import ms from "ms";
+import { usePocketbaseBear } from "./pocketbase.bear";
+import { create } from "zustand";
+
+const fiveMinutesInMs = ms("5 minutes");
+const twoMinutesInMs = ms("2 minutes");
+
+export interface AuthBearData {
+  pb: PocketBase;
+  token: string;
+  user: object | null;
+  register: Function;
+  login: Function;
+  logout: Function;
+  updateCurrentUser: Function;
+  refreshSession: () => void;
+  timer: Function;
+}
+
+// TODO: Error handling
+export const useAuthBear = create<AuthBearData>((set, get) => ({
+  pb: usePocketbaseBear((state) => state.pb),
+  token: "",
+  user: null,
+  register: async (email: string, password: string) => {
+    await get()
+      .pb.collection("users")
+      .create({ email, password, passwordConfirm: password });
+  },
+  login: async (email: string, password: string) => {
+    const result = await get()
+      .pb.collection("users")
+      .authWithPassword(email, password);
+    get().updateCurrentUser();
+    return result;
+  },
+  logout: () => {
+    get().pb.authStore.clear();
+  },
+  updateCurrentUser: () => {
+    set({ user: get().pb.authStore.model, token: get().pb.authStore.token });
+  },
+  refreshSession: async () => {
+    if (!get().pb.authStore.isValid) return;
+    console.log("Refreshing session");
+    const decoded: any = jwtDecode(get().token);
+    const tokenExpiration = decoded.exp;
+    const expirationWithBuffer = (decoded.exp + fiveMinutesInMs) / 1000;
+    if (tokenExpiration < expirationWithBuffer) {
+      await get().pb.collection("users").authRefresh();
+    }
+  },
+  timer: () => {
+    useInterval(get().refreshSession, get().token ? twoMinutesInMs : null);
+  },
+}));
