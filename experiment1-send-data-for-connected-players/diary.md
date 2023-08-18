@@ -112,8 +112,11 @@ https://react.dev/learn/synchronizing-with-effects#not-an-effect-initializing-th
 another@foo.com/12345678
 - increase counter in your own session
 
+## day 5 
+
 #### to do 
 - refactor PocketProvider.tsx to isolate: PocketProvider, AuthProvider and SessionProvider
+  - use https://github.com/pmndrs/zustand to avoid multiple providers
   - use reduceRight composition strategy from here https://matheusplessmann.com/avoid-provider-hell-with-composition/
   - PocketProvider - keep connection to pocketbase and expose pb state
   - AuthProvider - authentication only
