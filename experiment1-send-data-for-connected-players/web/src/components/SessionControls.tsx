@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { useLocation, Location } from "react-router-dom";
-import { saveNavigation } from "../utils/persistence";
-import { usePocket } from "../services/PocketProvider";
+import { useState } from "react";
+import { useGameStateBear } from "../services/game-state.bear";
 
 const SessionControls = () => {
-  const { joinSession, leaveSession, updateSession, sessions } = usePocket();
+  const { joinSession, leaveSession, updateSession, sessions } =
+    useGameStateBear();
   const [sessionID, setSessionID] = useState("");
 
   async function join(e: any) {

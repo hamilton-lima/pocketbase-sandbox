@@ -1,9 +1,9 @@
-import { usePocket } from "../services/PocketProvider";
 import SessionControls from "../components/SessionControls";
 import SessionList from "../components/SessionList";
+import { useAuthBear } from "../services/auth.bear";
 
 export const Protected = () => {
-  const { logout, user } = usePocket();
+  const { logout, user } = useAuthBear();
 
   return (
     <>

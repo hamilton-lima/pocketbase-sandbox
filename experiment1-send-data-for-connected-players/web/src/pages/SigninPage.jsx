@@ -1,11 +1,11 @@
-import React, { useRef, useCallback } from "react";
+import { useRef, useCallback } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { usePocket } from "../services/PocketProvider";
+import { useAuthBear } from "../services/auth.bear";
 
 export const SignIn = () => {
   const emailRef = useRef();
   const passwordRef = useRef();
-  const { login } = usePocket();
+  const { login } = useAuthBear((state) => state.login);
   const navigate = useNavigate();
 
   const handleOnSubmit = useCallback(

@@ -1,8 +1,8 @@
 import { Navigate, Outlet, useLocation } from "react-router-dom";
-import { usePocket } from "../services/PocketProvider";
+import { useAuthBear } from "../services/auth.bear";
 
 export const RequireAuth = () => {
-  const { user } = usePocket();
+  const { user } = useAuthBear();
   const location = useLocation();
 
   if (!user) {

@@ -1,7 +1,7 @@
-import { usePocket } from "../services/PocketProvider";
+import { useGameStateBear } from "../services/game-state.bear";
 
 const SessionList = () => {
-  const { sessions } = usePocket();
+  const { sessions } = useGameStateBear();
 
   return (
     <>

@@ -1,4 +1,4 @@
-import PocketBase from "pocketbase";
+import PocketBase, { Admin, Record } from "pocketbase";
 import { useInterval } from "usehooks-ts";
 import jwtDecode from "jwt-decode";
 import ms from "ms";
@@ -11,7 +11,7 @@ const twoMinutesInMs = ms("2 minutes");
 export interface AuthBearData {
   pb: PocketBase;
   token: string;
-  user: object | null;
+  user: Record | Admin | null;
   register: Function;
   login: Function;
   logout: Function;
@@ -54,6 +54,8 @@ export const useAuthBear = create<AuthBearData>((set, get) => ({
     }
   },
   timer: () => {
-    useInterval(get().refreshSession, get().token ? twoMinutesInMs : null);
+    // if (get().token) {
+    //   setInterval(get().refreshSession, twoMinutesInMs);
+    // }
   },
 }));
