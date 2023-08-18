@@ -114,7 +114,10 @@ another@foo.com/12345678
 
 ## day 5 
 
-#### to do 
+### done 
+- refactor pocketbase access to be done by a single bear :)
+
+### to do 
 - refactor PocketProvider.tsx to isolate: PocketProvider, AuthProvider and SessionProvider
   - use https://github.com/pmndrs/zustand to avoid multiple providers
   - use reduceRight composition strategy from here https://matheusplessmann.com/avoid-provider-hell-with-composition/
