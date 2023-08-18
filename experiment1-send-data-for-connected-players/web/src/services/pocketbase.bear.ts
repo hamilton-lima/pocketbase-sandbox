@@ -17,8 +17,3 @@ export const usePocketbaseBear = create<PocketBaseBearData>(() => ({
   pb: connect2PocketBase(),
 }));
 
-export const useCounterBear = create((set) => {
-  return {
-    counter: 0,
-  };
-});
