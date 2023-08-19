@@ -5,7 +5,7 @@ import { useAuthBear } from "../services/auth.bear";
 export const SignIn = () => {
   const emailRef = useRef();
   const passwordRef = useRef();
-  const { login } = useAuthBear((state) => state.login);
+  const { login } = useAuthBear();
   const navigate = useNavigate();
 
   const handleOnSubmit = useCallback(
