@@ -2,8 +2,10 @@ import PocketBase, { Admin, Record, RecordSubscription } from "pocketbase";
 import { usePocketbaseBear } from "./pocketbase.bear";
 import { create } from "zustand";
 import { useAuthBear } from "./auth.bear";
+import { Logger } from "../utils/logger";
 
 export interface GameStateBearData {
+  logger: Logger;
   pb: PocketBase;
   user: Record | Admin | null;
   sessions: Record[];
@@ -19,18 +21,21 @@ export interface GameStateBearData {
 // https://react.dev/learn/synchronizing-with-effects#not-an-effect-initializing-the-application
 
 export const useGameStateBear = create<GameStateBearData>((set, get) => ({
+  logger: new Logger("[gamestate 🐻]"),
   pb: usePocketbaseBear.getState().pb,
   user: useAuthBear.getState().user,
   sessions: [],
   joinSession: async (): Promise<Record | undefined> => {
     const user = get().user;
     if (user) {
-      console.log("joining session");
+      get().logger.log("Joining session");
       const result = await get()
         .pb.collection("sessions")
         .create({ user: user.id, data: { counter: 0 } });
-      console.log("joinned session", result);
+      get().logger.log("Joinned session", result);
       return result;
+    } else {
+      get().logger.warn("User is not set, are you logged in?");
     }
   },
   leaveSession: async (sessionID: string) => {
