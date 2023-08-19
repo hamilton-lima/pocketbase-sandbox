@@ -125,9 +125,7 @@ another@foo.com/12345678
 
 ### to do 
 
-- add some tests 
 - return record with proper data type
   - can we export classes from pocketbase?
   - can we generate a swagger and then generate the models only?
-
-  
+  https://github.com/pocketbase/pocketbase/issues/945 💀 no swagger...
