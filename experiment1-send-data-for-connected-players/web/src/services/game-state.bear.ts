@@ -36,7 +36,7 @@ export const useGameStateBear = create<GameStateBearData>((set, get) => ({
   joinSession: async (): Promise<Record | undefined> => {
     if (!get().ready.value) {
       get().logger.warn(
-        "Still hibernating, please come back on spring (bear not ready)"
+        "Still hibernating, please come back on spring (bear not ready, did you call subscribe?)"
       );
       return;
     }
