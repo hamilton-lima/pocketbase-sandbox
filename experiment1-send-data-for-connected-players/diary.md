@@ -112,7 +112,7 @@ https://react.dev/learn/synchronizing-with-effects#not-an-effect-initializing-th
 another@foo.com/12345678
 - increase counter in your own session
 
-## day 5 
+## day 5 / 6
 
 ### done 
 - refactor pocketbase access to be done by a single bear :)
@@ -123,9 +123,8 @@ another@foo.com/12345678
   - AuthProvider - authentication only
   - SessionProvider - user session, rename to GameStateProvider, session has similar context to authentication
 
-### to do 
-
 - return record with proper data type
   - can we export classes from pocketbase?
   - can we generate a swagger and then generate the models only?
   https://github.com/pocketbase/pocketbase/issues/945 💀 no swagger...
+  
