@@ -19,8 +19,8 @@ export interface GameStateBearData {
 // https://react.dev/learn/synchronizing-with-effects#not-an-effect-initializing-the-application
 
 export const useGameStateBear = create<GameStateBearData>((set, get) => ({
-  pb: usePocketbaseBear((state) => state.pb),
-  user: useAuthBear((state) => state.user),
+  pb: usePocketbaseBear.getState().pb,
+  user: useAuthBear.getState().user,
   sessions: [],
   joinSession: async (): Promise<Record | undefined> => {
     const user = get().user;

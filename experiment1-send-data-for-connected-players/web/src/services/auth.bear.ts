@@ -1,5 +1,4 @@
 import PocketBase, { Admin, Record } from "pocketbase";
-import { useInterval } from "usehooks-ts";
 import jwtDecode from "jwt-decode";
 import ms from "ms";
 import { usePocketbaseBear } from "./pocketbase.bear";
@@ -12,7 +11,7 @@ export interface AuthBearData {
   pb: PocketBase;
   token: string;
   user: Record | Admin | null;
-  register: Function;
+  register: (email: string, password: string) => Promise<Record>;
   login: Function;
   logout: Function;
   updateCurrentUser: Function;
@@ -22,11 +21,11 @@ export interface AuthBearData {
 
 // TODO: Error handling
 export const useAuthBear = create<AuthBearData>((set, get) => ({
-  pb: usePocketbaseBear((state) => state.pb),
+  pb: usePocketbaseBear.getState().pb,
   token: "",
   user: null,
   register: async (email: string, password: string) => {
-    await get()
+    return await get()
       .pb.collection("users")
       .create({ email, password, passwordConfirm: password });
   },
@@ -54,8 +53,8 @@ export const useAuthBear = create<AuthBearData>((set, get) => ({
     }
   },
   timer: () => {
-    // if (get().token) {
-    //   setInterval(get().refreshSession, twoMinutesInMs);
-    // }
+    if (get().token) {
+      setInterval(get().refreshSession, twoMinutesInMs);
+    }
   },
 }));
