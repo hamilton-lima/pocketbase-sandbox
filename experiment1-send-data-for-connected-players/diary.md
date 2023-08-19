@@ -116,15 +116,16 @@ another@foo.com/12345678
 
 ### done 
 - refactor pocketbase access to be done by a single bear :)
-
-### to do 
 - refactor PocketProvider.tsx to isolate: PocketProvider, AuthProvider and SessionProvider
   - use https://github.com/pmndrs/zustand to avoid multiple providers
-  - use reduceRight composition strategy from here https://matheusplessmann.com/avoid-provider-hell-with-composition/
+  - Archive: use reduceRight composition strategy from here https://matheusplessmann.com/avoid-provider-hell-with-composition/
   - PocketProvider - keep connection to pocketbase and expose pb state
   - AuthProvider - authentication only
   - SessionProvider - user session, rename to GameStateProvider, session has similar context to authentication
 
+### to do 
+
+- add some tests 
 - return record with proper data type
   - can we export classes from pocketbase?
   - can we generate a swagger and then generate the models only?
