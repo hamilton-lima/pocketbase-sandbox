@@ -1,8 +1,14 @@
-import PocketBase, { Admin, Record, RecordSubscription } from "pocketbase";
+import PocketBase, {
+  Admin,
+  Record,
+  RecordSubscription,
+  UnsubscribeFunc,
+} from "pocketbase";
 import { usePocketbaseBear } from "./pocketbase.bear";
-import { create } from "zustand";
+import { StoreApi, UseBoundStore, create } from "zustand";
 import { useAuthBear } from "./auth.bear";
 import { Logger } from "../utils/logger";
+import { BehaviorSubject } from "rxjs";
 
 export interface GameStateBearData {
   logger: Logger;
@@ -12,8 +18,10 @@ export interface GameStateBearData {
   joinSession: () => Promise<Record | undefined>;
   leaveSession: (sessionID: string) => void;
   updateSession: (sessionID: string, data: object) => void;
-  currentList: () => void;
-  unsubscribe: () => void;
+  refresh: () => void;
+  subscribe: () => void;
+  unsubscribe: UnsubscribeFunc | undefined;
+  ready: BehaviorSubject<boolean>;
 }
 
 // TODO: how to call unsubscribe(); ??
@@ -26,6 +34,13 @@ export const useGameStateBear = create<GameStateBearData>((set, get) => ({
   user: () => useAuthBear.getState().user,
   sessions: [],
   joinSession: async (): Promise<Record | undefined> => {
+    if (!get().ready.value) {
+      get().logger.warn(
+        "Still hibernating, please come back on spring (bear not ready)"
+      );
+      return;
+    }
+
     const user = get().user();
     if (user) {
       get().logger.log("Joining session");
@@ -48,14 +63,14 @@ export const useGameStateBear = create<GameStateBearData>((set, get) => ({
       return await get().pb.collection("sessions").update(sessionID, { data });
     }
   },
-  currentList: async () => {
+  refresh: async () => {
     const all = await get().pb.collection("sessions").getFullList({
       sort: "created",
       expand: "user",
     });
     set({ sessions: all });
   },
-  unsubscribe: async () => {
+  subscribe: async () => {
     const result = await get()
       .pb.collection("sessions")
       .subscribe("*", async (e: RecordSubscription) => {
@@ -84,7 +99,9 @@ export const useGameStateBear = create<GameStateBearData>((set, get) => ({
           set({ sessions: [...sessions] });
         }
       });
-
-    return result;
+    set({ unsubscribe: result });
+    get().ready.next(true);
   },
+  unsubscribe: undefined,
+  ready: new BehaviorSubject(false),
 }));
