@@ -15,6 +15,7 @@ export interface GameStateBearData {
   pb: PocketBase;
   user: () => Record | Admin | null;
   sessions: Record[];
+  findByID: (sessionID: string) => Record | undefined;
   joinSession: () => Promise<Record | undefined>;
   leaveSession: (sessionID: string) => void;
   updateSession: (sessionID: string, data: object) => void;
@@ -33,6 +34,14 @@ export const useGameStateBear = create<GameStateBearData>((set, get) => ({
   pb: usePocketbaseBear.getState().pb,
   user: () => useAuthBear.getState().user,
   sessions: [],
+  findByID: (sessionID: string) => {
+    const found = get().sessions.filter((value) => value.id === sessionID);
+    get().logger.log("Found on search by ID", sessionID, found);
+    if (Array.isArray(found) && found.length > 0) {
+      return found[0];
+    }
+    return undefined;
+  },
   joinSession: async (): Promise<Record | undefined> => {
     if (!get().ready.value) {
       get().logger.warn(
@@ -76,10 +85,19 @@ export const useGameStateBear = create<GameStateBearData>((set, get) => ({
       .subscribe("*", async (e: RecordSubscription) => {
         get().logger.log("Sessions collection updated", e);
         if (e.action === "create") {
-          e.record.expand = await get()
-            .pb.collection("users")
-            .getOne(e.record.user);
-          set({ sessions: [...get().sessions, e.record] });
+          if (!get().findByID(e.record.id)) {
+            get().logger.log("Session created event", e.record.id);
+            e.record.expand = await get()
+              .pb.collection("users")
+              .getOne(e.record.user);
+
+            set({ sessions: [...get().sessions, e.record] });
+          } else {
+            get().logger.log(
+              "Session already exists won't create",
+              e.record.id
+            );
+          }
         }
         if (e.action === "delete") {
           set({
