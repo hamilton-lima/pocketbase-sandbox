@@ -1,18 +1,24 @@
-import React, { useEffect, useState } from "react";
-import { useLocation, Location } from "react-router-dom";
-import { saveNavigation } from "../utils/persistence";
-import { usePocket } from "../services/PocketProvider";
+import { useState } from "react";
+import { useGameStateBear } from "../services/game-state.bear";
+import { Logger } from "../utils/logger";
+import React from "react";
 
 const SessionControls = () => {
-  const { joinSession, leaveSession, updateSession, sessions } = usePocket();
+  const { subscribe, joinSession, leaveSession, updateSession, sessions } =
+    useGameStateBear();
   const [sessionID, setSessionID] = useState("");
+  const logger = new Logger("SessionControl.tsx");
+
+  React.useEffect(() => {
+    subscribe();
+  }, []);
 
   async function join(e: any) {
     e.preventDefault();
     const session = await joinSession();
     if (session) {
       setSessionID(session.id);
-      console.log("You Join the session", JSON.stringify(session));
+      logger.log("You Join the session", session.id);
     }
   }
 
@@ -21,22 +27,24 @@ const SessionControls = () => {
     if (sessionID) {
       leaveSession(sessionID);
       setSessionID("");
-      console.log("You Left the session");
+      logger.log("You Left the session");
     }
   }
 
   async function update(amount: number) {
+    logger.log("Update current sessionID", sessionID);
+    logger.log("sessions", sessions);
     if (sessionID) {
       const record = sessions.find((session) => session.id == sessionID);
-      console.log("Found current session", record);
+      logger.log("Found current session", record);
       if (record) {
         const current = record.data;
-        console.log("current data", current);
+        logger.log("Current data", current);
 
         if (current) {
           current.counter = current.counter + amount;
           const result = await updateSession(sessionID, current);
-          console.log("session updated", result);
+          logger.log("Session updated", result);
         }
       }
     }

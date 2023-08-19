@@ -112,9 +112,13 @@ https://react.dev/learn/synchronizing-with-effects#not-an-effect-initializing-th
 another@foo.com/12345678
 - increase counter in your own session
 
-#### to do 
+## day 5 / 6
+
+### done 
+- refactor pocketbase access to be done by a single bear :)
 - refactor PocketProvider.tsx to isolate: PocketProvider, AuthProvider and SessionProvider
-  - use reduceRight composition strategy from here https://matheusplessmann.com/avoid-provider-hell-with-composition/
+  - use https://github.com/pmndrs/zustand to avoid multiple providers
+  - Archive: use reduceRight composition strategy from here https://matheusplessmann.com/avoid-provider-hell-with-composition/
   - PocketProvider - keep connection to pocketbase and expose pb state
   - AuthProvider - authentication only
   - SessionProvider - user session, rename to GameStateProvider, session has similar context to authentication
@@ -122,5 +126,5 @@ another@foo.com/12345678
 - return record with proper data type
   - can we export classes from pocketbase?
   - can we generate a swagger and then generate the models only?
-
+  https://github.com/pocketbase/pocketbase/issues/945 💀 no swagger...
   

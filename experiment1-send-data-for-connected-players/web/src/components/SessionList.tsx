@@ -1,7 +1,12 @@
-import { usePocket } from "../services/PocketProvider";
+import React from "react";
+import { useGameStateBear } from "../services/game-state.bear";
 
 const SessionList = () => {
-  const { sessions } = usePocket();
+  const { sessions, refresh } = useGameStateBear();
+
+  React.useEffect(() => {
+    refresh();
+  }, []);
 
   return (
     <>
@@ -14,7 +19,7 @@ const SessionList = () => {
         }
         return (
           <div key={index}>
-            {email} {JSON.stringify(item.data)}
+            {item.id} {email} {JSON.stringify(item.data)}
           </div>
         );
       })}
