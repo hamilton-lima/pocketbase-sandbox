@@ -20,6 +20,7 @@ export interface GameStateBearData {
   leaveSession: (sessionID: string) => void;
   updateSession: (sessionID: string, data: object) => void;
   refresh: () => void;
+  addUser2Record: (session: Record) => Promise<Record>;
   subscribe: () => void;
   unsubscribe: UnsubscribeFunc | undefined;
   ready: BehaviorSubject<boolean>;
@@ -79,6 +80,12 @@ export const useGameStateBear = create<GameStateBearData>((set, get) => ({
     });
     set({ sessions: all });
   },
+  addUser2Record: async (session: Record) => {
+    const userDetails = await get().pb.collection("users").getOne(session.user);
+    get().logger.log("User details found", userDetails);
+    session.expand = userDetails;
+    return session;
+  },
   subscribe: async () => {
     const result = await get()
       .pb.collection("sessions")
@@ -87,10 +94,7 @@ export const useGameStateBear = create<GameStateBearData>((set, get) => ({
         if (e.action === "create") {
           if (!get().findByID(e.record.id)) {
             get().logger.log("Session created event", e.record.id);
-            e.record.expand = await get()
-              .pb.collection("users")
-              .getOne(e.record.user);
-
+            e.record = await get().addUser2Record(e.record);
             set({ sessions: [...get().sessions, e.record] });
           } else {
             get().logger.log(
@@ -107,6 +111,7 @@ export const useGameStateBear = create<GameStateBearData>((set, get) => ({
           });
         }
         if (e.action === "update") {
+          e.record = await get().addUser2Record(e.record);
           const sessions = get().sessions;
           const index = sessions.findIndex((value) => value.id === e.record.id);
           get().logger.log("Found session at position", index);
