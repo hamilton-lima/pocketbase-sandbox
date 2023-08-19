@@ -1,12 +1,17 @@
 import { useState } from "react";
 import { useGameStateBear } from "../services/game-state.bear";
 import { Logger } from "../utils/logger";
+import React from "react";
 
 const SessionControls = () => {
-  const { joinSession, leaveSession, updateSession, sessions } =
+  const { subscribe, joinSession, leaveSession, updateSession, sessions } =
     useGameStateBear();
   const [sessionID, setSessionID] = useState("");
   const logger = new Logger("SessionControl.tsx");
+
+  React.useEffect(() => {
+    subscribe();
+  }, []);
 
   async function join(e: any) {
     e.preventDefault();

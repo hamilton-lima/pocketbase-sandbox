@@ -101,6 +101,7 @@ export const useGameStateBear = create<GameStateBearData>((set, get) => ({
       });
     set({ unsubscribe: result });
     get().ready.next(true);
+    get().logger.log("subscribe done, bear is ready");
   },
   unsubscribe: undefined,
   ready: new BehaviorSubject(false),
