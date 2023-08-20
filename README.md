@@ -5,10 +5,7 @@
 [Send data for connected players](experiment1-send-data-for-connected-players/readme.md)
 
 ## Experiment 2
-- Move elements and synchronize for all connected players
-- Add reusable visual components
-    - https://www.radix-ui.com/
-    - https://ui.shadcn.com/examples/authentication
+[Move elements and synchronize for all connected players](experiment2/readme.md)
 
 ## Experiment 3 
 - Deploy to a server
